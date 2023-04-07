@@ -12,7 +12,7 @@ app.use(json());
 const db = createConnection({
   host: "127.0.0.1",
   user: "root",
-  password: "root",
+  password: "a125569932",
   database: "employeeSystem",
   port: 3306,
 });
