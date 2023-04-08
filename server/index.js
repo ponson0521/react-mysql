@@ -3,16 +3,13 @@ import { createConnection } from 'mysql';
 import cors from 'cors';
 
 const app = express();
-app.listen(3001 , ()=>{
-    console.log('ok, server is running on port 3001')
-})
 app.use(cors());
 app.use(json());
 
 const db = createConnection({
   host: "127.0.0.1",
   user: "root",
-  password: "a125569932",
+  password: "root",
   database: "employeeSystem",
   port: 3306,
 });
@@ -43,4 +40,23 @@ app.get("/employee", (req, res) => {
   });
 });
 
+app.put("/update", (req, res) => {
+  const id = req.body.id;
+  const age = req.body.age;
+  db.query(
+    "UPDATE employees SET age = ? WHERE id = ?",
+    [age, id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
 
+
+app.listen(3001 , ()=>{
+  console.log('ok, server is running on port 3001')
+});

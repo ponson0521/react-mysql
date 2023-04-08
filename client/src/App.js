@@ -6,6 +6,7 @@ function App() {
   const [name,setName] = useState("");
   const [age,setAge] = useState(0);
   const [employeeList , setEmployeeList] = useState([]);
+  const [newAge, setNewAge] = useState(null);
 
   const addEmployee = () => {
     axios.post("http://localhost:3001/create", {
@@ -28,6 +29,24 @@ function App() {
     });
   };
 
+  const updateEmployeeAge = (id, age) => {
+    console.log(id);
+    axios.put("http://localhost:3001/update", { age: age, id: id }).then(
+      (response) => {
+        setEmployeeList(
+          employeeList.map((val) => {
+            return val.id === id
+              ? {
+                  id: val.id,
+                  name: val.name,
+                }
+              : val;
+          })
+        );
+      }
+    );
+  };
+
   return (
     <div className="App">
       <label>Name:</label>
@@ -37,10 +56,15 @@ function App() {
       <button onClick={addEmployee}>ADD</button>
       <button onClick={getEmployees}>Show Employees</button>
       <br/>
-      {employeeList.map((val, key) => {
+      {employeeList.map((val) => {
         return <ul key={val.id} style={{float:'left'}}>                
           <li>Name: {val.name}</li>
           <li>Age: {val.age}</li>
+          <input type="number" onChange={event => {
+            setNewAge(event.target.value);
+          }}
+          />
+          <button onClick={updateEmployeeAge(val.id, newAge)}>update</button>
         </ul>;
       })}
     </div>
