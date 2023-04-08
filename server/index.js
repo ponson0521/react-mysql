@@ -42,10 +42,10 @@ app.get("/employee", (req, res) => {
 
 app.put("/update", (req, res) => {
   const id = req.body.id;
+  const name = req.body.name;
   const age = req.body.age;
   db.query(
-    "UPDATE employees SET age = ? WHERE id = ?",
-    [age, id],
+    `UPDATE employee SET age = ${age}, name = "${name}" WHERE id = ${id}`,
     (err, result) => {
       if (err) {
         console.log(err);
