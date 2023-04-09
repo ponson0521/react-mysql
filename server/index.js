@@ -43,22 +43,35 @@ app.get("/get", (req, res) => {
 });
 
 app.put("/update", (req, res) => {
-  const id = req.body.id;
   const name = req.body.name;
-  const category = req.body.category;
   const price = req.body.price;
-  const stocked = [req.body.stocked ? 1 : 0];
+  const change = req.body.change;
 
-  db.query(
-    `UPDATE product SET name="${name}", category="${category}", price="${price}", stocked=${stocked} WHERE id=${id};`,
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
+  if (change === undefined) {
+    db.query(
+      `UPDATE product SET price="${price}" WHERE name="${name}";`,
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
       }
-    }
-  );
+    );  
+  }
+
+  if (price === undefined) {
+    db.query(
+      `UPDATE product SET name="${change}" WHERE name="${name}";`,
+      (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.send(result);
+        }
+      }
+    );  
+  }
 });
 
 app.delete("/remove/:id", (req, res) => {

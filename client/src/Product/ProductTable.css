@@ -10,3 +10,6 @@ td span {
 td span:hover {
     color: rgb(0, 126, 126);
 }
+td.x:hover {
+    color: red;
+}
