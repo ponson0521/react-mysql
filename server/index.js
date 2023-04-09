@@ -16,22 +16,24 @@ const db = createConnection({
 
 app.post("/create", (req, res) => {
   const name = req.body.name;
-  const age = req.body.age;
+  const category = req.body.category;
+  const price = req.body.price;
+  const stocked = [req.body.stocked ? 1 : 0];
 
   db.query(
-    `INSERT INTO employee (name, age) VALUES ("${name}", ${age})`,
+    `INSERT INTO product (name, category, price, stocked) VALUES ("${name}", "${category}", "${price}", ${stocked});`,
     (err, result) => {
       if (err) {
         console.log(err);
       } else {
-        res.send("Values Inserted");
+        res.send(result);
       }
     }
   );
 });
 
-app.get("/employee", (req, res) => {
-  db.query("SELECT * FROM employee", (err, result) => {
+app.get("/get", (req, res) => {
+  db.query("SELECT * FROM product ORDER BY category DESC;", (err, result) => {
     if (err) {
       console.log(err);
     } else {
@@ -43,10 +45,26 @@ app.get("/employee", (req, res) => {
 app.put("/update", (req, res) => {
   const id = req.body.id;
   const name = req.body.name;
-  const age = req.body.age;
+  const category = req.body.category;
+  const price = req.body.price;
+  const stocked = [req.body.stocked ? 1 : 0];
+
   db.query(
-    `UPDATE employee SET age = ${age}, name = "${name}" WHERE id = ${id}`,
+    `UPDATE product SET name="${name}", category="${category}", price="${price}", stocked=${stocked} WHERE id=${id};`,
     (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.delete("/remove/:id", (req, res) => {
+  const id = req.params.id;
+  db.query(
+    `DELETE FROM product WHERE id=${id};`, (err, result) => {
       if (err) {
         console.log(err);
       } else {

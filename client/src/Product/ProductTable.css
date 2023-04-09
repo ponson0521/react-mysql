@@ -1,0 +1,12 @@
+td {
+    cursor: pointer;
+}
+td:hover {
+    color: aqua;
+}
+td span {
+    color: red;
+}
+td span:hover {
+    color: rgb(0, 126, 126);
+}
