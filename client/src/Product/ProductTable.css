@@ -4,12 +4,12 @@ td {
 td:hover {
     color: aqua;
 }
-td span {
-    color: red;
-}
-td span:hover {
-    color: rgb(0, 126, 126);
-}
 td.x:hover {
     color: red;
+}
+td.oos {
+    color:red;
+}
+td.oos:hover {
+    color: aqua;
 }

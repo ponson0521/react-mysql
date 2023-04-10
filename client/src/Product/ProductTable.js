@@ -19,11 +19,7 @@ const ProductRow = ({product}) => {
     const {setProductList} = useContext(filterContext);
     const [changeType, setChangeType] = useState(null);
     const [change, setChange] = useState('');
-    const name = product.stocked ?
-    product.name :
-    <span >
-        {product.name}
-    </span>;
+    const name = product.name
 
     const clickDelete = () => {
         axios.delete(`http://localhost:3001/remove/${product.id}`)
@@ -55,12 +51,13 @@ const ProductRow = ({product}) => {
             )
         };
     };
-    console.log(changeType);
 
     return (
     <tr>
         <td className='x' onClick={clickDelete}>x</td>
-        <td onClick={() => {setChangeType('name')}}>{name}</td>
+        {product.stocked ?
+        <td onClick={() => {setChangeType('name')}}>{name}</td>:
+        <td className='oos' onClick={() => {setChangeType('name')}}>{name}</td>}
         <td onClick={() => {setChangeType('price')}}>{product.price}</td>
         {changeType === null ? null : 
         <td>
